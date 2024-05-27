@@ -21,5 +21,8 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard', loadChildren: () => import('./shared/dashboard/dashboard.module').then(m => m.DashboardModule)
+    },
+    {
+        path: 'project-list', loadChildren: () => import('./feature/list-projects/list-projects.module').then(m => m.ListProjectsModule)
     }
 ];
