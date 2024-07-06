@@ -13,7 +13,7 @@ const database = async () => {
         console.log(error);
     }
 }
-module.exports = database
+module.exports = database;
 
 /* MY SQL Connection  */
 // const mysql = require('mysql2/promise');

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { LayoutComponent } from './layout/layout.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,9 +21,26 @@ export const routes: Routes = [
         loadChildren: () => import('./confirm-password/confirm-password.module').then(m => m.ConfirmPasswordModule),
     },
     {
-        path: 'dashboard', loadChildren: () => import('./shared/dashboard/dashboard.module').then(m => m.DashboardModule)
-    },
-    {
-        path: 'project-list', loadChildren: () => import('./feature/list-projects/list-projects.module').then(m => m.ListProjectsModule)
+        path: '',
+        component: LayoutComponent,
+        children: [
+            {
+                path: 'dashboards/analytics',
+                redirectTo: '/',
+                pathMatch: 'full'
+            },
+            {
+                path: 'dashboard', loadChildren: () => import('./shared/dashboard/dashboard.module').then(m => m.DashboardModule)
+            },
+            { path: 'project', loadChildren: () => import('./feature/list-projects/list-projects.module').then(m => m.ListProjectsModule) },
+
+            //   {
+            //     path: '**',
+            //     loadComponent: () =>
+            //       import('./pages/pages/errors/error-404/error-404.component').then(
+            //         (m) => m.Error404Component
+            //       )
+            //   }
+        ]
     }
 ];

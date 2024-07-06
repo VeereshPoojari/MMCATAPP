@@ -9,10 +9,112 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    html,
+    body {
+      height: 100%;
+      font-family: Times New Roman;
+    }
+
+    body {
+      margin: 0;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+      max-height: 100%;
+      overflow: hidden;
+    }
+
+    .form {
+      background: rgba(255, 255, 255, 0);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      width: 100%;
+      height: 100%;
+      position: relative;
+      box-shadow: 10px 10px 20px rgba(82, 80, 80, 0.25);
+    }
+
+    body.light-theme {
+      background-color: white;
+      /* background: linear-gradient(to right, white, rgb(146, 142, 135)), rgb(175, 175, 160); */
+      /* background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); */
+
+      color: black;
+    }
+
+    body.dark-theme {
+      background-color: black;
+      color: white;
+    }
+
+    body.pink-theme {
+      background-color: #6B1299;
+      color: white;
+    }
+
+    body.primary-theme {
+      background-color: #2d50b1;
+      color: white;
+    }
+
+    body.purple-theme {
+      background-color: purple;
+      color: white;
+    }
+
+    /* Styling for the dropdown */
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .theme-switcher-container {
+      position: sticky;
+      top: 10px;
+      /* background-color: #fff; */
+      padding: 10px;
+      /* border: 1px solid #ccc; */
+      border-radius: 4px;
+      z-index: 1000;
+      /* Ensure it stays on top */
+    }
+
+    ::ng-deep.mat-mdc-button-disabled {
+      background-color: #6B1299;
+    }
+  </style>
 </head>
 
-<body class="mat-typography">
+<body id="body" class="at-typography light-theme">
+  <!-- <div class="container mx-auto p-1 theme-switcher-container">
+    <div class="mb-4 ">
+      <label for="themeSelect" class="mr-4">Select Theme:</label>
+      <select id="themeSelect" class="p-2 border rounded" onchange="changeTheme(this.value)">
+        <option value="light-theme">Light Theme</option>
+        <option value="dark-theme">Dark Theme</option>
+        <option value="pink-theme">Pink Theme</option>
+        <option value="primary-theme">Primary Theme</option>
+        <option value="purple-theme">Purple Theme</option>
+      </select>
+    </div>
+  </div> -->
   <app-root></app-root>
+  <script>
+    const bodyElement = document.getElementById('body');
+    const selectElement = document.getElementById('themeSelect');
+
+    function changeTheme(selectedTheme) {
+      bodyElement.className = selectedTheme;
+      selectElement.style.backgroundColor = getComputedStyle(bodyElement).getPropertyValue('background-color');
+      selectElement.style.color = getComputedStyle(bodyElement).getPropertyValue('color');
+    }
+
+    // Initialize the select element with the current theme
+    selectElement.value = 'light-theme'; // Default theme selection
+    changeTheme('light-theme'); // Apply initial theme
+  </script>
 </body>
 
 </html>
