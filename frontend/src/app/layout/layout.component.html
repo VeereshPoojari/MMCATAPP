@@ -1,4 +1,10 @@
-
+<!-- 
 <app-tool-bar></app-tool-bar>
 <app-side-nav-bar></app-side-nav-bar>
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> -->
+<!-- layout.component.html -->
+<app-tool-bar (toggleSideNavEvent)="onToggleSideNav()"></app-tool-bar>
+<app-side-nav-bar #sideNav></app-side-nav-bar>
+<!-- <router-outlet></router-outlet> -->
+
+
