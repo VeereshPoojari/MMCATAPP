@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit  {
 
   login(){
     console.log(this.loginForm.value);
+    // fetch'http://10.70.1.179:8080/api/authentication/login'
     this.router.navigate(['/dashboard'])
   }
 

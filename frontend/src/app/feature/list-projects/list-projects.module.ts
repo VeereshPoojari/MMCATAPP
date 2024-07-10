@@ -10,13 +10,18 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { ListProjectsComponent } from './list-projects.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HttpClientModule } from '@angular/common/http';
+import { CreateUpdateProjectsComponent } from './create-update-projects/create-update-projects.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [ListProjectsComponent],
+  declarations: [ListProjectsComponent,CreateUpdateProjectsComponent],
   imports: [
     CommonModule,
-    ListProjectsRoutingModule,
+    ListProjectsRoutingModule,ReactiveFormsModule,FormsModule,
     MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule,
-    MatButtonModule,MatDialogModule
+    MatButtonModule,MatDialogModule,MatIconModule,MatCheckboxModule,HttpClientModule
   ]
 })
 export class ListProjectsModule { }
