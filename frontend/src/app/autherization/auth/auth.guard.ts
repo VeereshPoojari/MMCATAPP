@@ -1,7 +1,8 @@
-// auth.guard.ts
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,25 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
-    if (this.authService.isAuthenticatedUser()) {
-      return true;
+    console.log('AuthGuard#canActivate called');
+    if (this.authService.isAuthenticated()) {
+      console.log('AuthGuard: User is authenticated');
+      this.authService.fetchMyProfile().pipe(
+        map(resp => {
+          console.log('Profile fetched:', resp);
+          localStorage.setItem('userProfile', resp.body.data.organization.organizationName);
+          return true;
+        }),
+        catchError(error => {
+          console.log('Error fetching profile:', error);
+          this.router.navigate(['/login']);
+          return of(false);
+        })
+      ).subscribe();
+      return true; // Return true initially to allow the route activation
     } else {
-      this.router.navigate(['/login']); // Redirect to login page if not authenticated
+      console.log('AuthGuard: User is not authenticated');
+      this.router.navigate(['/login']);
       return false;
     }
   }

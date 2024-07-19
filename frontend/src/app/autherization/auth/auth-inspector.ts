@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthInspector implements CanActivate {
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService, private router: Router) {}
-
-  canActivate(): boolean {
-    if (this.authService.isAuthenticatedUser() && !this.authService.isSessionExpired()) {
-      return true;
-    } else {
-      this.authService.logout(); // Optionally clear any session data
-      this.router.navigate(['/login']); // Redirect to login page if not authenticated or session expired
-      return false;
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('Bearer access_token');
+    if (token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
     }
+    return next.handle(request);
   }
 }

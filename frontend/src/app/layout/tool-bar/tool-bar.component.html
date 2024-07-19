@@ -3,7 +3,7 @@
   <button (click)="onToggleSideNav()" mat-icon-button aria-label="Menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>My App</span>
+  <span>{{currentUserData}}</span>
   <span class="example-spacer"></span>
 
   <!-- Profile Menu -->
@@ -12,7 +12,7 @@
   </button>
   <mat-menu #profileMenu="matMenu">
     <button mat-menu-item (click)="updateProfile()">Update Profile</button>
-    <button mat-menu-item (click)="updateProfile()">Log Out</button>
+    <button mat-menu-item (click)="logout()">Log Out</button>
     <!-- Add more menu items as needed -->
   </mat-menu>
 </mat-toolbar>

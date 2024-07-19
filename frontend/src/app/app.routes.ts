@@ -24,7 +24,7 @@ export const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
-        // canActivate: [AuthGuard], 
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'dashboards/analytics',
@@ -40,13 +40,13 @@ export const routes: Routes = [
             { path: 'sub-branch', loadChildren: () => import('./feature/sub-organization-list/sub-organization-list.module').then(m => m.SubOrganizationListModule) },
             { path: 'settings', loadChildren: () => import('./shared/settings/settings.module').then(m => m.SettingsModule) },
 
-              {
+            {
                 path: '**',
                 loadComponent: () =>
-                  import('./autherization/errors/error-404/error-404.component').then(
-                    (m) => m.Error404Component
-                  )
-              }
+                    import('./autherization/errors/error-404/error-404.component').then(
+                        (m) => m.Error404Component
+                    )
+            }
         ]
     }
 ];

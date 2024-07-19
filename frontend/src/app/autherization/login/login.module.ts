@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -18,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,HttpClientModule
   ],
+  providers:[AuthService]
 })
 export class LoginModule { }
