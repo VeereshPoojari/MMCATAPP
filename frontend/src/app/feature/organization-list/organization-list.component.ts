@@ -4,6 +4,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { StatusHelper } from '../../core/status.helper';
 import { Observable } from 'rxjs';
+import { OrganizationService } from './organization.service';
 export interface Organization {
   id: number;
   name: string;
@@ -19,18 +20,26 @@ export interface Organization {
   styleUrl: './organization-list.component.scss'
 })
 export class OrganizationListComponent extends EntityComponent<Organization> {
-    displayedColumns: string[] = ['checkbox', 'name', 'email', 'actions'];
-  
+    displayedColumns: string[] = ['checkbox', 'name','isMainBranch', 'email', 'actions'];
+    dataSourcea:any;
     constructor(
-      protected httpClient: HttpClient, statusHelper: StatusHelper
+      protected httpClient: HttpClient, statusHelper: StatusHelper,private organizationService:OrganizationService
     ) {
       super(statusHelper); // Call the constructor of the abstract class
+      // this.organizationService.getAllOrganization().subscribe(response =>{
+      //   console.log(response);
+      // })
     }
   
-    getAll(request: any): Observable<HttpResponse<any>> {
+    getAll(): Observable<HttpResponse<any>> {
       // Replace with your actual API endpoint to fetch Organizations
-      const url = 'https://api.example.com/Organizations';
-      return this.httpClient.get<any>(url, { observe: 'response' });
+      // const url = 'https://api.example.com/Organizations';
+      // return this.httpClient.get<any>(url, { observe: 'response' });
+      this.organizationService.getAllOrganization().subscribe(response =>{
+        console.log(response);
+        this.dataSourcea=response.body.data;
+      })
+      return null;
     }
   
     mapDate(entity: Organization) {
