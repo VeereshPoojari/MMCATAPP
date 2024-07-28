@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { StatusHelper } from '../../core/status.helper';
 import { Observable } from 'rxjs';
 import { OrganizationService } from './organization.service';
+import { ListRequest } from '../../core/list-request.model';
 export interface Organization {
   id: number;
   name: string;
@@ -20,8 +21,7 @@ export interface Organization {
   styleUrl: './organization-list.component.scss'
 })
 export class OrganizationListComponent extends EntityComponent<Organization> {
-    displayedColumns: string[] = ['checkbox', 'name','isMainBranch', 'email', 'actions'];
-    dataSourcea:any;
+    displayedColumns: string[] = ['checkbox', 'name','isMainBranch', 'email','activated', 'actions'];
     constructor(
       protected httpClient: HttpClient, statusHelper: StatusHelper,private organizationService:OrganizationService
     ) {
@@ -31,15 +31,8 @@ export class OrganizationListComponent extends EntityComponent<Organization> {
       // })
     }
   
-    getAll(): Observable<HttpResponse<any>> {
-      // Replace with your actual API endpoint to fetch Organizations
-      // const url = 'https://api.example.com/Organizations';
-      // return this.httpClient.get<any>(url, { observe: 'response' });
-      this.organizationService.getAllOrganization().subscribe(response =>{
-        console.log(response);
-        this.dataSourcea=response.body.data;
-      })
-      return null;
+    getAll(listRequest:ListRequest): Observable<HttpResponse<any>> {
+      return this.organizationService.getAllOrganizationList(listRequest);
     }
   
     mapDate(entity: Organization) {

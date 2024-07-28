@@ -12,9 +12,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateUpdateEmpleeComponent } from './create-update-emplee/create-update-emplee.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
-  declarations: [UsersListComponent],
+  declarations: [UsersListComponent,CreateUpdateEmpleeComponent],
   imports: [
     CommonModule,
     UsersListRoutingModule,
@@ -24,7 +31,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MatCheckboxModule,
     MatInputModule,
-    MatMenuModule,MatIconModule,MatButtonModule
+    MatMenuModule,MatIconModule,MatButtonModule,ReactiveFormsModule,FormsModule,MatFormFieldModule,MatSelectModule,MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule
   ]
 })
 export class UsersListModule { }

@@ -1,0 +1,86 @@
+<div class="h-full m-3 overflow-hidden">
+    <div class="flex flex-row items-center justify-center">
+        <h1 class="mat-dialog-title">{{ mode }} Employee</h1>
+        <mat-icon class="ml-auto" mat-dialog-close>close</mat-icon>
+    </div>
+    <div class="mat-dialog-content" >
+        <form [formGroup]="form" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input formControlName="firstName" matInput placeholder="First Name">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input formControlName="lastName" matInput placeholder="Last Name">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Date of Birth</mat-label>
+                <input formControlName="dateOfBirth" matInput [matDatepicker]="picker1" placeholder="Date of Birth">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input formControlName="email" matInput placeholder="Email">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Phone Number</mat-label>
+                <input formControlName="phoneNumber" matInput placeholder="Phone Number">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Hire Date</mat-label>
+                <input formControlName="hireDate" matInput [matDatepicker]="picker2" placeholder="Hire Date">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Salary</mat-label>
+                <input formControlName="salary" matInput type="number" placeholder="Salary">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Department</mat-label>
+                <input formControlName="department" matInput placeholder="Department">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Position</mat-label>
+                <input formControlName="position" matInput placeholder="Position">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Emergency Contact Name</mat-label>
+                <input formControlName="emergencyContactName" matInput placeholder="Emergency Contact Name">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Emergency Contact Phone</mat-label>
+                <input formControlName="emergencyContactPhone" matInput placeholder="Emergency Contact Phone">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Emergency Contact Relationship</mat-label>
+                <input formControlName="emergencyContactRelationship" matInput placeholder="Emergency Contact Relationship">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>PF Account Number</mat-label>
+                <input formControlName="pfAccountNumber" matInput placeholder="PF Account Number">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>PF Contribution</mat-label>
+                <input formControlName="pfContribution" matInput type="number" placeholder="PF Contribution">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>PF Join Date</mat-label>
+                <input formControlName="pfJoinDate" matInput [matDatepicker]="picker3" placeholder="PF Join Date">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>PF Exit Date</mat-label>
+                <input formControlName="pfExitDate" matInput [matDatepicker]="picker4" placeholder="PF Exit Date">
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="mat-dialog-actions">
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">Submit</button>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+</div>

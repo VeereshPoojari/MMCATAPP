@@ -1,6 +1,6 @@
 const OrganizationModel = require('./models/OrganizationModel');
 const log = require('../../database-connection//logfile'); // Adjust the path as needed
-
+const { Op } = require('sequelize');
 // Create or update an organization
 const createUpdate = async (req, res) => {
   try {
@@ -75,6 +75,44 @@ const getAllOrganization = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const listAllOrganization = async (req, res) => {
+  const { page = 1, size = 10, sortColumn = 'id', sortDirection = 'ASC', searchString = '' } = req.query;
+
+  // Ensure sortDirection is valid and default to 'ASC'
+  const validSortDirections = ['ASC', 'DESC'];
+  const validSortDirection = validSortDirections.includes(sortDirection.toUpperCase()) ? sortDirection.toUpperCase() : 'ASC';
+
+  try {
+      // Construct the where clause for search
+      const whereClause = searchString ? {
+          [Op.or]: [
+              { name: { [Op.iLike]: `%${searchString}%` } } // Example search on 'name' column
+          ]
+      } : {};
+
+      // Fetch organizations with pagination, sorting
+      const organizations = await OrganizationModel.findAll({
+          where: whereClause,
+          limit: parseInt(size, 10),
+          offset: (parseInt(page, 10) - 1) * parseInt(size, 10),
+          order: [[sortColumn, validSortDirection]]
+      });
+
+      // Get total count for pagination
+      const total = await OrganizationModel.count({
+          where: whereClause
+      });
+
+      res.status(200).json({
+          message: 'Organizations found',
+          data: organizations,
+          total
+      });
+  } catch (error) {
+      console.error("Error fetching organizations:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 // Delete multiple organizations
 const deleteMultiple = async (req, res) => {
@@ -93,5 +131,6 @@ module.exports = {
   getUserById,
   deleteById,
   getAllOrganization,
-  deleteMultiple
+  deleteMultiple,
+  listAllOrganization
 };

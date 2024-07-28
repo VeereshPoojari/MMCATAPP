@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { EntityComponent } from '../../core/entity.component';
 import { StatusHelper } from '../../core/status.helper';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { UserService } from './user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ListRequest } from '../../core/list-request.model';
+import { CreateUpdateEmpleeComponent } from './create-update-emplee/create-update-emplee.component';
 
 export interface User {
   id: number;
@@ -18,39 +22,67 @@ export interface User {
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent extends EntityComponent<User> {
-  displayedColumns: string[] = ['checkbox', 'name', 'email', 'actions'];
-
+  displayedColumns: string[] = ['checkbox', 'firstName', 'lastName', 'position', 'department', 'email', 'actions'];
   constructor(
-    protected httpClient: HttpClient, statusHelper: StatusHelper
+    protected httpClient: HttpClient,
+    statusHelper: StatusHelper,
+    private dialog: MatDialog,
+    private userService: UserService
   ) {
-    super(statusHelper); // Call the constructor of the abstract class
+    super(statusHelper);
   }
 
-  getAll(request: any): Observable<HttpResponse<any>> {
-    // Replace with your actual API endpoint to fetch users
-    const url = 'https://api.example.com/users';
-    return this.httpClient.get<any>(url, { observe: 'response' });
+  getAll(request: ListRequest): Observable<HttpResponse<any>> {
+    return this.userService.getAllEmployeeList(request);
   }
 
-  mapDate(entity: User) {
+  createEmployee() {
+    this.dialog.open(CreateUpdateEmpleeComponent, {
+      width: '1000px',
+      // maxHeight: '1000px',
+      data:{},
+      panelClass: 'custom-dialog-container'
+    }).afterClosed().subscribe(() => {
+      this.refreshDatatable();
+    });
+  }
+
+
+  mapDate(entity: any) {
     // Implement date mapping logic if needed
   }
 
-  mapStatus(entity: User) {
+  mapStatus(entity: any) {
     // Implement status mapping logic if needed
   }
 
-  mapLabels(entity: User) {
+  mapLabels(entity: any) {
     // Implement label mapping logic if needed
   }
 
-  edit(user: User) {
-    console.log('Edit user:', user);
-    // Implement edit functionality
+  edit(employee) {
+    console.log('Edit employee:', employee);
+    // Open the dialog with employee data
+    this.dialog.open(CreateUpdateEmpleeComponent, {
+      width: '1000px',
+      maxHeight: '1000px',
+      data: { employee },
+      panelClass: 'custom-dialog-container'
+    }).afterClosed().subscribe(() => {
+      this.refreshDatatable();
+    });
   }
+  
+  delete(employee) {
+    console.log('Delete employee:', employee);
+    this.userService.deleteEmployeeById(employee.id).subscribe(response => {
+      console.log(response);
+      this.refreshDatatable();
+    }, (error => {
+      console.log(error);
 
-  delete(user: User) {
-    console.log('Delete user:', user);
+    }))
     // Implement delete functionality
   }
 }
+

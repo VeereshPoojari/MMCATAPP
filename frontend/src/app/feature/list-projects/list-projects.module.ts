@@ -15,13 +15,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateUpdateProjectsComponent } from './create-update-projects/create-update-projects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { AutomationProgressListComponent } from './automation-progress-list/automation-progress-list.component';
 @NgModule({
-  declarations: [ListProjectsComponent,CreateUpdateProjectsComponent],
+  declarations: [ListProjectsComponent,CreateUpdateProjectsComponent,AutomationProgressListComponent],
   imports: [
     CommonModule,
     ListProjectsRoutingModule,ReactiveFormsModule,FormsModule,
     MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule,
-    MatButtonModule,MatDialogModule,MatIconModule,MatCheckboxModule,HttpClientModule
-  ]
+    MatButtonModule,MatDialogModule,MatIconModule,MatCheckboxModule,HttpClientModule,MatSelectModule
+  ],
 })
 export class ListProjectsModule { }

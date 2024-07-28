@@ -13,4 +13,7 @@ export class OrganizationService {
   getAllOrganization(): Observable<HttpResponse<any>> {
     return this.http.get<any>(SERVICE_API_URL + "/users/organization", { observe: 'response' });
   }
+  getAllOrganizationList(request:any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(SERVICE_API_URL + "/users/list",request, { observe: 'response' });
+  }
 }

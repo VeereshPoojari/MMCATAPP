@@ -6,6 +6,7 @@ const Users = require('./user-implementaion'); // Adjust path as necessary
 const OrganizationIMPL=require('./organization-implementation')
 /* organization apis start */
 router.get('/organization',OrganizationIMPL.getAllOrganization)
+router.post('/list',OrganizationIMPL.listAllOrganization)
 /* organization apis end */
 
 

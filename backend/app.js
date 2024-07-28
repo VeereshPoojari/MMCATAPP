@@ -75,7 +75,6 @@ app.use((req, res, next) => {
 
 /* Router components */
 app.use("/api", appRouter);
-
 // catch 404 and forward to error handler
 app.use(function(_req, _res, next) {
     next(createError(404));

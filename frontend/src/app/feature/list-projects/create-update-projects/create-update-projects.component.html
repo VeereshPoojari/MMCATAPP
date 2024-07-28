@@ -9,6 +9,15 @@
                 <mat-label>Name</mat-label>
                 <input formControlName="name" matInput placeholder="Placeholder">
             </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Project Status</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option *ngFor="let status of projectStatusList" [value]="status.id">
+                    {{status.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
         </form>
     </div>
     <div class="mat-dialog-actions">

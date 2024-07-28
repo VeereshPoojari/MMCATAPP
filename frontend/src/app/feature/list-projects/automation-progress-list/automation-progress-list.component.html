@@ -1,0 +1,71 @@
+<div class="h-full w-full p-2">
+    <div class="flex flex-row items-center">
+        <h1>Automaton Report</h1>
+        <button class="ml-auto" mat-raised-button color="primary" (click)="runAutomation()">Run</button>
+    </div>
+    <div>
+        <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="checkbox">
+                <mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Test Name </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="totalTestCases">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total Test Cases </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.totalTestCases }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="totalPassedCount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Passed test Cases </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.totalPassedCount }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="totalFailedCount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Failed Test cases </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.totalFailedCount }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="totalBreakedCount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Breaked Test Cases </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.totalBreakedCount }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.status }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-icon-button (click)="edit(row)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="deleteTestReport(row)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Header and Row Definitions -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+
+        <!-- Paginator -->
+        <mat-paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"
+            (page)="handlePageBottom($event)">
+        </mat-paginator>
+    </div>
+</div>

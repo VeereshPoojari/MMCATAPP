@@ -31,6 +31,7 @@ export class NavigationService {
         { label: 'Organization', route: '/organization', icon: 'business' },
         { label: 'Branches', route: '/sub-branch', icon: 'location_city' },
         { label: 'Projects', route: '/project', icon: 'work' },
+        { label: 'Tickets', route: '/tickets', icon: 'work' },
         { label: 'Settings', route: '/settings', icon: 'settings' }
         // Add more items as needed
       ]);

@@ -38,6 +38,7 @@ export const routes: Routes = [
             { path: 'users', loadChildren: () => import('./feature/users-list/users-list.module').then(m => m.UsersListModule) },
             { path: 'organization', loadChildren: () => import('./feature/organization-list/organization-list.module').then(m => m.OrganizationListModule) },
             { path: 'sub-branch', loadChildren: () => import('./feature/sub-organization-list/sub-organization-list.module').then(m => m.SubOrganizationListModule) },
+            { path: 'tickets', loadChildren: () => import('./feature/tickets-list/tickets-list.module').then(m => m.TicketsListModule) },
             { path: 'settings', loadChildren: () => import('./shared/settings/settings.module').then(m => m.SettingsModule) },
 
             {

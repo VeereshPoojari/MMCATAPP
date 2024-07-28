@@ -1,5 +1,5 @@
 import { OnInit, ViewChild, AfterViewInit, Directive, ElementRef } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, merge } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -10,7 +10,6 @@ import { untilDestroyed } from '@ngneat/until-destroy';
 import { StatusHelper } from './status.helper';
 import { ListRequest } from './list-request.model';
 import { TableColumn } from './table-column.interface';
-import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Directive()
@@ -18,7 +17,7 @@ export abstract class EntityComponent<T> implements OnInit, AfterViewInit {
 
     protected dateFormat = 'dd-MM-yyyy';
     public dataSource: MatTableDataSource<T> | null;
-    data: any[];
+    data: T[] = [];
     pageSize = 60;
     page = 0;
     pageSizeOptions: number[] = [60, 120, 240];
@@ -67,18 +66,12 @@ export abstract class EntityComponent<T> implements OnInit, AfterViewInit {
                 )
                 .subscribe();
 
-            // Handling sort and pagination changes
             if (this.sort) {
                 this.sort.sortChange.subscribe(() => {
                     this.paginator.pageIndex = 0;
                     this.page = this.paginator.pageIndex;
+                    this.refreshDatatable();
                 });
-
-                merge(this.sort.sortChange, this.paginator.page)
-                    .pipe(
-                        tap(() => this.refreshDatatable())
-                    )
-                    .subscribe();
             }
         }
     }
@@ -92,8 +85,7 @@ export abstract class EntityComponent<T> implements OnInit, AfterViewInit {
         this.loadingData.next(false);
         this.data = [];
         const request = this.getListRequest();
-        
-        // Fetch data from API using getAll abstract method
+
         this.getAll(request).subscribe((response: HttpResponse<any>) => {
             if (response != null) {
                 const entities = response.body.data;
@@ -102,7 +94,7 @@ export abstract class EntityComponent<T> implements OnInit, AfterViewInit {
                 this.totalRecords = response.body.total;
                 this.selection.clear();
                 if (entities) {
-                    entities.forEach((entity:any) => {
+                    entities.forEach(entity => {
                         this.mapLabels(entity);
                         this.mapDate(entity);
                         this.mapStatus(entity);
@@ -125,6 +117,7 @@ export abstract class EntityComponent<T> implements OnInit, AfterViewInit {
         value = value.trim().toLowerCase();
         this.searchString = value;
         this.paginator.pageIndex = 0;
+        this.page = this.paginator.pageIndex;
         this.refreshDatatable();
     }
 
@@ -172,6 +165,8 @@ export abstract class EntityComponent<T> implements OnInit, AfterViewInit {
     handlePageBottom(event: PageEvent): void {
         this.paginator.pageSize = event.pageSize;
         this.paginator.pageIndex = event.pageIndex;
+        this.page = event.pageIndex;
+        this.pageSize = event.pageSize;
         this.refreshDatatable();
     }
 
