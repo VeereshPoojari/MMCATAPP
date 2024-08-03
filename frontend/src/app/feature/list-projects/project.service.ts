@@ -16,6 +16,9 @@ export class ProjectService {
   getAllProjectList(req:any): Observable<HttpResponse<any>> {
     return this.http.post<any>(SERVICE_API_URL + "/projects/",req, { observe: 'response' });
   }
+  getAllProjectListByORGId(organizationId:any,req:any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(SERVICE_API_URL + "/projects/"+organizationId,req, { observe: 'response' });
+  }
   deleteProjectById(projectId:Number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(SERVICE_API_URL + "/projects/"+projectId, { observe: 'response' });
   }
@@ -29,6 +32,9 @@ export class ProjectService {
   }
   getAllTestingList(req:any): Observable<HttpResponse<any>> {
     return this.http.post<any>(SERVICE_API_URL + "/automation/list",req, { observe: 'response' });
+  }
+  getAllTestingListBYProjectId(projectId:any,req:any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(SERVICE_API_URL + "/automation/"+projectId,req, { observe: 'response' });
   }
   deleteTestById(projectId:Number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(SERVICE_API_URL + "/automation/"+projectId, { observe: 'response' });

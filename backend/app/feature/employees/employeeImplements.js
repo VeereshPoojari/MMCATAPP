@@ -114,9 +114,44 @@ const list = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+const getListByOrganizationId = async (req, res) => {
+    console.log("SSSSSSSSSreq "+JSON.stringify(req.body));
+    // const { organizationId } = req.query; // Filter condition for organizationId
+    const organizationId = req.params.organizationId;
+    const { page = 1, size = 10, sortColumn = 'id', sortDirection = 'desc' } = req.query; // Pagination and sorting parameters
+
+    try {
+        // Construct the where clause based on provided filters
+        const whereClause = organizationId ? { organizationId } : {};
+        // Fetch employees with pagination, sorting, and included related models
+        const employees = await Employee.findAll({
+            where: whereClause,
+            include: [
+                { model: Organization, as: 'organization' }
+            ],
+            limit: parseInt(size, 10),
+            offset: (parseInt(page, 10) - 1) * parseInt(size, 10),
+            order: [[sortColumn, sortDirection.toUpperCase()]]
+        });
+
+        // Get total count for pagination
+        const total = await Employee.count({
+            where: whereClause
+        });
+
+        res.status(200).json({
+            data: employees,
+            total
+        });
+    } catch (error) {
+        console.error("Error fetching employees:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
 
 module.exports = {
     list,
+    getListByOrganizationId,
     listAll,
     detail,
     add,

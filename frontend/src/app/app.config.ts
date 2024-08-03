@@ -17,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientModule),
     AuthService,
     CommonModule,
+    HttpClientModule,
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,

@@ -16,4 +16,7 @@ export class OrganizationService {
   getAllOrganizationList(request:any): Observable<HttpResponse<any>> {
     return this.http.post<any>(SERVICE_API_URL + "/users/list",request, { observe: 'response' });
   }
+  deleteOrganizationById(organizationId:any): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(SERVICE_API_URL + "/users/organization/"+organizationId, { observe: 'response' });
+  }
 }

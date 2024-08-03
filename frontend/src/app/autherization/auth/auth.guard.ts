@@ -19,6 +19,7 @@ export class AuthGuard implements CanActivate {
         map(resp => {
           console.log('Profile fetched:', resp);
           localStorage.setItem('userProfile', resp.body.data.organization.organizationName);
+          localStorage.setItem('organizationId', resp.body.data.organization.id);
           return true;
         }),
         catchError(error => {

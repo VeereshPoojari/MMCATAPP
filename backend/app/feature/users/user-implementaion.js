@@ -8,10 +8,39 @@ const log = require('../../database-connection/logfile')
 /* create update user and organization */
 const createUpdate = async (req, res) => {
     try {
-        const { Users, Organization } = req.body;
+        const Users = { userName, password, firstName, middleName, lastName, image, webUrl } = req.body;
+        const Organization = { organizationName, branchName, isMainBranch, email, phone, address, state, city, zip, country } = req.body;
+        Organization.isMainBranch=1;
+        Organization.activated=1;
+        Organization.subscriptionId=1;
+        // Organization.subscribed='b';
+        // Organization.subscriptionStartDate='';
+        // Organization.subscriptionEndDate='';
+        Organization.docsVerified=false;
+        Organization.documentsLocation='';
+        Organization.createdBy='Register';
+        Organization.lastModifiedBy='Register';
 
-        // Check if organization already exists
-        let organization = await OrganizationModel.findOne({ where: { organizationName: Organization.organizationName } });
+        Users.roleId=4;
+        Users.isArchived=0;
+        Users.status=1;
+        Users.passordChangeRequired=0;
+        Users.createdBy="Register";
+        // Users.lastModifiedBy
+        let organization = await OrganizationModel.findOne({ where: { organizationName } });
+        if (organization) {
+            return res.status(400).json({ error: "Organization already exists" });
+        }
+
+        let emailExist = await OrganizationModel.findOne({ where: { email } });
+        if (emailExist) {
+            return res.status(400).json({ error: "Email already exists" });
+        }
+
+        let phoneExist = await OrganizationModel.findOne({ where: { phone } });
+        if (phoneExist) {
+            return res.status(400).json({ error: "Phone number already exists" });
+        }
 
         if (!organization) {
             organization = await OrganizationModel.create(Organization);
@@ -28,7 +57,7 @@ const createUpdate = async (req, res) => {
         // Create the user
         const newUser = await UserModel.create({
             ...Users,
-            organizationId: organization.id 
+            organizationId: organization.id
         });
 
         // Check if role exists
@@ -241,5 +270,5 @@ const deleteMultiple = async (req, res) => {
     }
 };
 module.exports = {
-    createUpdate, getUserById,deleteById,getAll,deleteMultiple
+    createUpdate, getUserById, deleteById, getAll, deleteMultiple
 };

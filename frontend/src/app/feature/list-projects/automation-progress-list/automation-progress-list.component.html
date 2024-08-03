@@ -1,7 +1,10 @@
 <div class="h-full w-full p-2">
     <div class="flex flex-row items-center">
         <h1>Automaton Report</h1>
-        <button class="ml-auto" mat-raised-button color="primary" (click)="runAutomation()">Run</button>
+        <div class="ml-auto flex flex-row gap-1">
+            <button  mat-raised-button color="primary" (click)="downloadTemplate()">Download</button>
+            <button  mat-raised-button color="primary" (click)="runAutomation()">Run</button>
+        </div>
     </div>
     <div>
         <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
@@ -41,6 +44,10 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Breaked Test Cases </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{ row.totalBreakedCount }} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="notExecuteTestCases">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Not execute Test Cases </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.notExecuteTestCases }} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{ row.status }} </mat-cell>
@@ -62,7 +69,7 @@
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
         </mat-table>
-
+        <div class="text-center bg-white" *ngIf="dataSource.data.length ===0">No Record Found</div>
         <!-- Paginator -->
         <mat-paginator [length]="totalRecords" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"
             (page)="handlePageBottom($event)">

@@ -22,6 +22,8 @@ export interface User {
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent extends EntityComponent<User> {
+  organizationId=localStorage.getItem('organizationId');
+
   displayedColumns: string[] = ['checkbox', 'firstName', 'lastName', 'position', 'department', 'email', 'actions'];
   constructor(
     protected httpClient: HttpClient,
@@ -33,7 +35,9 @@ export class UsersListComponent extends EntityComponent<User> {
   }
 
   getAll(request: ListRequest): Observable<HttpResponse<any>> {
-    return this.userService.getAllEmployeeList(request);
+    // return this.userService.getAllEmployeeList(request);
+    return this.userService.getAllEmployeeListBYORGID(this.organizationId,request);
+
   }
 
   createEmployee() {

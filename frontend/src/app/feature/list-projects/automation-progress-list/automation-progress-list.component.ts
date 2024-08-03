@@ -18,7 +18,8 @@ import { CreateUpdateProjectsComponent } from '../create-update-projects/create-
   styleUrl: './automation-progress-list.component.scss'
 })
 export class AutomationProgressListComponent extends EntityComponent<ProjectModels> {
-  displayedColumns: string[] = ['checkbox', 'name','totalTestCases','totalPassedCount','totalFailedCount','totalBreakedCount', 'status', 'actions'];
+  displayedColumns: string[] = ['checkbox', 'name','totalTestCases','totalPassedCount','totalFailedCount','totalBreakedCount', 'notExecuteTestCases','status', 'actions'];
+  projectId: any;
 
 
   constructor(
@@ -29,10 +30,12 @@ export class AutomationProgressListComponent extends EntityComponent<ProjectMode
     private router: Router
   ) {
     super(statusHelper);
+    this.projectId=history.state.id
   }
 
   getAll(request: ListRequest): Observable<HttpResponse<any>> {
-    return this.projectService.getAllTestingList(request);
+    return this.projectService.getAllTestingListBYProjectId(this.projectId,request);
+    // return this.projectService.getAllTestingList(request);
   }
 
   createProject() {
@@ -81,6 +84,12 @@ export class AutomationProgressListComponent extends EntityComponent<ProjectMode
       console.log(error);
 
     }))
+  }
+  downloadTemplate() {
+    let link = document.createElement("a");
+    link.download = "Automation";
+    link.href = "assets/templates/Automation_Key_Xpath.xlsx";
+    link.click();
   }
 }
 

@@ -1,10 +1,10 @@
-<div class="h-full w-full p-2">
+<div class="h-full w-full p-2 overflow-hidden">
     <div class="flex flex-row items-center">
         <h1>Organization</h1>
         <button class="ml-auto"  color="primary" mat-flat-button>Create</button>
     </div>
-    <div>
-        <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+    <div >
+        <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" >
 
             <!-- Checkbox Column -->
             <ng-container matColumnDef="checkbox">
@@ -57,7 +57,7 @@
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
         </mat-table>
-
+        <div class="text-center bg-white" *ngIf="dataSource.data.length ===0">No Record Found</div>
         <!-- Paginator -->
         <mat-paginator [length]="totalRecords" 
                        [pageSizeOptions]="pageSizeOptions" 

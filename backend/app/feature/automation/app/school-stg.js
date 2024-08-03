@@ -8,8 +8,8 @@ const AutomationReport = require('../Automation-ReportModel');
 
 const getRowCount = async (req, res) => {
     let driver;
-    // driver = await new Builder().forBrowser("chrome").build();
-    driver = await new Builder().forBrowser("MicrosoftEdge").build();
+    driver = await new Builder().forBrowser("chrome").build();
+    // driver = await new Builder().forBrowser("MicrosoftEdge").build();
     // driver = await new Builder().forBrowser("firefox").build();
     // const options = new chrome.Options();
     // options.addArguments('--remote-allow-origins=*');
@@ -35,7 +35,8 @@ const getRowCount = async (req, res) => {
     let executedTestCount = 0;
 
     try {
-        await driver.get('https://school.mapmyclasses.com/login');
+        // await driver.get('https://school.mapmyclasses.com/login');
+        await driver.get('https://school-stg.mapmyguru.com/login');
         await driver.manage().window().maximize();
         await driver.manage().deleteAllCookies();
 

@@ -29,6 +29,7 @@ export class CreateUpdateProjectsComponent implements OnInit {
     { id: 14, name: "Maintenance" },
     { id: 15, name: "Bug Fixes" }
   ];
+  organizationId=localStorage.getItem('organizationId');
   constructor(private fb: FormBuilder, private projectService: ProjectService,private dialog:MatDialog) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -41,10 +42,10 @@ export class CreateUpdateProjectsComponent implements OnInit {
   save() {
     console.log(this.form.value);
     const req = {
-      name: this.form.get('name').value,
+      name: this.form.get('name').value.toUpperCase(),
       status: this.form.get('status').value,
       userId: 1,
-      organizationId: 1,
+      organizationId: parseInt(this.organizationId),
       createdBy: 'ms.admin'
     }
     this.projectService.createUpdateProject(req).subscribe(response => {

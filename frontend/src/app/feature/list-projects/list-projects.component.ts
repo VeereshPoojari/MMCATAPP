@@ -9,7 +9,7 @@ import { ProjectModels } from './models/project.model';
 import { ProjectService } from './project.service';
 import { ListRequest } from '../../core/list-request.model';
 import { CreateUpdateProjectsComponent } from './create-update-projects/create-update-projects.component';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-projects.component.scss']
 })
 export class ListProjectsComponent extends EntityComponent<ProjectModels> {
+  organizationId=localStorage.getItem('organizationId');
   displayedColumns: string[] = ['checkbox', 'name', 'user', 'status', 'actions'];
   projectStatusList = [
     { id: 0, name: "New", color: "#FF5733" },
@@ -50,7 +51,8 @@ export class ListProjectsComponent extends EntityComponent<ProjectModels> {
   }
 
   getAll(request: ListRequest): Observable<HttpResponse<any>> {
-    return this.projectService.getAllProjectList(request);
+    return this.projectService.getAllProjectListByORGId(this.organizationId,request);
+    // return this.projectService.getAllProjectList(request);
   }
 
   createProject() {
@@ -100,7 +102,12 @@ export class ListProjectsComponent extends EntityComponent<ProjectModels> {
     // Implement delete functionality
   }
   automationProgress(project: ProjectModels) {
-    this.router.navigate(['/project/test']);
+    const extraNavigation: NavigationExtras = {
+      state: {
+        id: project.id
+      }
+    }
+    this.router.navigate(['/project/test'], extraNavigation);
   }
 }
 

@@ -1,85 +1,103 @@
 <div class="flex flex-row w-full h-full overflow-hidden">
-    <form [formGroup]="registerForm" class="flex flex-col gap-3 w-full mx-20 form mt-4  p-4 rounded-xl relative overflow-y-scroll ">
+    <form [formGroup]="registerForm"
+        class="flex flex-col gap-3 w-full mx-20 form my-4 px-2 py-6 rounded-xl relative overflow-y-scroll">
         <h1 class="text-center">Register for an account</h1>
-        <div class="flex flex-col">
-            <mat-form-field appearance="fill">
-                <mat-label>Enter Organistion Name</mat-label>
-                <input formControlName="organistionName" matInput placeholder="Enter">
-            </mat-form-field>
-          <div class="w-full flex flex-col sm:flex-row gap-2">
-            <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Enter First Name</mat-label>
-                <input formControlName="firstName" matInput placeholder="Enter">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Enter Last Name</mat-label>
-                <input formControlName="lastName" matInput placeholder="Enter">
-            </mat-form-field>
-          </div>
-          <div class="w-full flex flex-col sm:flex-row gap-2">
 
-              <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Enter Email</mat-label>
-                  <input formControlName="email" matInput placeholder="Enter">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Enter Mobile No.</mat-label>
-                  <input type="number" formControlName="mobileNo" matInput placeholder="Enter">
-              </mat-form-field>
-          </div>
-          <div class="w-full flex flex-col sm:flex-row gap-2">
-            <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Enter password</mat-label>
-                <input formControlName="password" placeholder="password" matInput [type]="hide ? 'password' : 'text'">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Confirm password</mat-label>
-                <input formControlName="confirmPassword" placeholder="password" matInput [type]="hidep ? 'password' : 'text'">
-                <button mat-icon-button matSuffix (click)="hidep = !hidep" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hidep">
-                    <mat-icon>{{hidep ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-          </div>
-          <div class="w-full flex flex-col sm:flex-row gap-2">
-              <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Enter Address</mat-label>
-                  <input formControlName="address" matInput placeholder="Enter">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Enter City</mat-label>
-                  <input formControlName="city" matInput placeholder="Enter">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="w-full">
-                <mat-label>Enter ZIP/PIN Code</mat-label>
-                <input type="number" formControlName="pincode" matInput placeholder="Enter">
-            </mat-form-field>
-          </div>
-          <div class="w-full flex flex-col sm:flex-row gap-2">
+        <div class="mb-4">
+            <h2 class="text-lg font-bold">Organization Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Organization Name</mat-label>
+                    <input formControlName="organizationName" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Branch Name</mat-label>
+                    <input formControlName="branchName" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Phone</mat-label>
+                    <input type="tel" formControlName="phone" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Address</mat-label>
+                    <input formControlName="address" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>State</mat-label>
+                    <input formControlName="state" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>City</mat-label>
+                    <input formControlName="city" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>ZIP/PIN Code</mat-label>
+                    <input type="number" formControlName="zip" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Country</mat-label>
+                    <input formControlName="country" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Web URL</mat-label>
+                    <input formControlName="webUrl" matInput placeholder="Enter">
+                </mat-form-field>
+            </div>
+        </div>
 
-              <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Enter State</mat-label>
-                  <input formControlName="state" matInput placeholder="Enter">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="w-full">
-                  <mat-label>Enter Country</mat-label>
-                  <input formControlName="country" matInput placeholder="Enter">
-              </mat-form-field>
-          </div>
-            <button (click)="register()" color="primary" mat-raised-button type="button" id="registerBtn"
-                [disabled]="!registerForm.valid">
+        <div class="mb-4">
+            <h2 class="text-lg font-bold">Personal Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Username</mat-label>
+                    <input formControlName="userName" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Password</mat-label>
+                    <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" placeholder="Enter">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Confirm Password</mat-label>
+                    <input formControlName="confirmPassword" matInput [type]="hidep ? 'password' : 'text'"
+                        placeholder="Enter">
+                    <button mat-icon-button matSuffix (click)="hidep = !hidep" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hidep">
+                        <mat-icon>{{ hidep ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>First Name</mat-label>
+                    <input formControlName="firstName" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Middle Name</mat-label>
+                    <input formControlName="middleName" matInput placeholder="Enter">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Last Name</mat-label>
+                    <input formControlName="lastName" matInput placeholder="Enter">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <button (click)="register()" color="primary" mat-raised-button type="button"
+                id="registerBtn" [disabled]="!registerForm.valid">
                 Create Account
             </button>
 
+            <p class="flex flex-col sm:flex-row text-secondary text-center mt-4">
+                <span>Already have an account?</span>
+                <a [routerLink]="['/login']" id="registerBtn" class="ml-2 underline">Login Here</a>
+            </p>
         </div>
-        <p class="flex flex-col sm:flex-col text-secondary text-center">
-            <span>Already have an account</span>
-            <a [routerLink]="['/login']" id="registerBtn" class="blink ml-6 "
-                style="text-decoration:underline">Login Here</a>
-        </p>
     </form>
 </div>

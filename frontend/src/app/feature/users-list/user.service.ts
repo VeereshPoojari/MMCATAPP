@@ -15,6 +15,9 @@ export class UserService {
   getAllEmployeeList(req:any): Observable<HttpResponse<any>> {
     return this.http.post<any>(SERVICE_API_URL + "/employee/",req, { observe: 'response' });
   }
+  getAllEmployeeListBYORGID(organizationId:any,req:any): Observable<HttpResponse<any>> {
+    return this.http.post<any>(SERVICE_API_URL + "/employee/"+organizationId,req, { observe: 'response' });
+  }
   deleteEmployeeById(EmployeeId:Number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(SERVICE_API_URL + "/employee/"+EmployeeId, { observe: 'response' });
   }

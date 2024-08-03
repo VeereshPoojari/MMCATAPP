@@ -65,7 +65,63 @@ const list = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+const getListByProjectId = async (req, res) => {
+    const { page = 1, size = 10, searchString = '', sortColumn = 'id', sortDirection = 'ASC', filters = {} } = req.body;
+    const projectId = req.params.projectId;
+    const userId = req.body.userId || null; // Example filter condition
 
+    try {
+        let whereClause = {};
+
+        // Add projectId to whereClause
+        if (projectId) {
+            whereClause.projectId = projectId;
+        }
+
+        // Add userId to whereClause if it exists
+        if (userId) {
+            whereClause.userId = userId;
+        }
+
+        // Construct the where clause for search if needed
+        if (searchString) {
+            whereClause[Op.or] = [
+                { reportName: { [Op.iLike]: `%${searchString}%` } } // Example search on 'reportName' column
+                // Add other searchable fields as needed
+            ];
+        }
+
+        // Apply additional filters if provided
+        if (filters) {
+            Object.assign(whereClause, filters);
+        }
+
+        // Use the paginate function to get the data
+        const result = await paginate(AutomationReport, parseInt(page, 10), parseInt(size, 10), searchString, filters, whereClause);
+
+        // Include related models
+        const reportsWithIncludes = await AutomationReport.findAll({
+            where: whereClause,
+            include: [
+                { model: Projects, as: 'project' } // Include related project information
+            ],
+            limit: parseInt(size, 10),
+            offset: Math.max(0, (parseInt(page, 10) - 1) * parseInt(size, 10)), // Ensure offset is non-negative
+            order: [[sortColumn, sortDirection.toUpperCase()]]
+        });
+
+        // Replace the data rows with the ones that include related models
+        result.data = reportsWithIncludes;
+
+        res.status(200).json({
+            data: result.data,
+            total: result.total
+        });
+    } catch (error) {
+        console.error("Error fetching reports:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
 
 // Get details of a specific automation report by ID
 const detail = async (req, res) => {
@@ -193,5 +249,5 @@ module.exports = {
     detail,
     add,
     update,
-    del, list
+    del, list,getListByProjectId
 };

@@ -3,6 +3,7 @@ const router = express.Router();
 const employeeImpl = require("./employeeImplements");
 
 router.post("/", employeeImpl.list);
+router.post("/:organizationId", employeeImpl.getListByOrganizationId);
 router.get("/all", employeeImpl.listAll);
 /**
  * Get employee details

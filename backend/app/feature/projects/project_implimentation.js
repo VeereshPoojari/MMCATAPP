@@ -40,16 +40,10 @@ async function detail(req, res) {
 }
 
 // Add a new project
-async function add(req, res) {
-    const { name, organizationId, userId, status ,createdBy} = req.body;
+const add=async (req, res) => {
+    // const { name, organizationId, userId, status ,createdBy} = req.body;
     try {
-        const newProject = await Projects.create({
-            name,
-            organizationId,
-            userId,
-            status,
-            createdBy
-        });
+        const newProject = await Projects.create(req.body);
         res.status(201).json(newProject);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -129,8 +123,49 @@ async function list(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+const listOrganizationId = async (req, res) => {
+    const { page, size, searchString, sortColumn, sortDirection, filters = {} } = req.body;
+    const organizationId = req.params.organizationId; // Get organizationId from request params
+    
+    try {
+        let whereClause = {};
+
+        // Add organizationId to whereClause if it exists
+        if (organizationId) {
+            whereClause.organizationId = organizationId;
+        }
+
+        // Use the paginate function to get the data
+        const result = await paginate(Projects, page, size, searchString, filters, whereClause);
+
+        // Include related models
+        const projectsWithIncludes = await Projects.findAll({
+            where: whereClause,
+            include: [
+                { model: Organization, as: 'organization' },
+                { model: User, as: 'user' }
+            ],
+            limit: size,
+            offset: (page > 0 ? (page - 1) * size : 0), // Ensure offset is non-negative
+            order: [[sortColumn, sortDirection.toUpperCase()]]
+        });
+
+        // Replace the data rows with the ones that include related models
+        result.data = projectsWithIncludes;
+
+        res.status(200).json({
+            data: result.data,
+            total: result.total
+        });
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     list,
+    listOrganizationId,
     listAll,
     detail,
     add,
