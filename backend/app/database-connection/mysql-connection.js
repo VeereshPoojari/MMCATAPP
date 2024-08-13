@@ -55,8 +55,11 @@ async function setupDatabaseAndMigrations() {
         log.Info('Sequelize: Connection has been established successfully.');
 
         // Liquibase configuration
+
         const liquibaseConfig = {
-            changeLogFile: 'app/liquibase/master.xml',
+            changeLogFile: '/app/liquibase/master.xml',
+            // changeLogFile: '../liquibase/master.xml',
+            // changeLogFile:require('../liquibase/master.xml'),
             url: 'jdbc:mysql://localhost:3306/project_management_system',
             username: process.env.MYSQL_USE_NAME,
             password: process.env.MYSQL_PWD,

@@ -30,9 +30,8 @@ const Projects = sequelize.define('Projects', {
         }
     },
     status: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.BIGINT,
         allowNull: false,
-        defaultValue: false,
         field: 'status'
     },
 }, {

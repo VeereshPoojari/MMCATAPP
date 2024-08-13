@@ -10,22 +10,15 @@ router.get("/all", projectIMpl.listAll);
 /**
  * Get a projectIMpl details
  */
-router.post(
-  "/create",
-  projectIMpl.add
-);
+router.post("/create",projectIMpl.add);
 router.get("/:id", projectIMpl.detail);
 // Add new role
 
 // Update a role
-router.post(
-  "/update/:id",
-  projectIMpl.update
-);
+router.post("/update/:id",projectIMpl.update);
+
 // Delete a user
-router.delete(
-  "/:id",
-  projectIMpl.del
-);
+router.delete("/:id",projectIMpl.del);
+
 module.exports = router;
 

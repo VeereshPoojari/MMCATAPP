@@ -41,12 +41,14 @@ async function detail(req, res) {
 
 // Add a new project
 const add=async (req, res) => {
-    // const { name, organizationId, userId, status ,createdBy} = req.body;
+    const data={ name, organizationId, userId, status ,createdBy} = req.body;
+    console.log("gggggdata  "+JSON.stringify(data));
+    
     try {
-        const newProject = await Projects.create(req.body);
-        res.status(201).json(newProject);
+        const newProject = await Projects.create(data);
+        res.status(200).json({message:'project created successfully',data:newProject});
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error });
     }
 }
 
